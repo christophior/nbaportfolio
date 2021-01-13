@@ -6,6 +6,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
+		publicPath: '/',
 	},
 	module: {
 		rules: [
@@ -16,6 +17,10 @@ module.exports = {
 					loader: 'babel-loader',
 				},
 			},
+			{
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
+			},
 		],
 	},
 	plugins: [
@@ -24,10 +29,10 @@ module.exports = {
 		}),
 	],
 	devServer: {
+		historyApiFallback: true,
 		hot: true,
 		open: 'Google Chrome',
 		port: 4000,
-		compress: true,
 	},
 	stats: {
 		colors: true,
