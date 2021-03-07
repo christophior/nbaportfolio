@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Icon } from 'react-icons-kit';
 import { star as starIcon } from 'react-icons-kit/fa/star';
-import { infoCircle } from 'react-icons-kit/fa/infoCircle';
 import NumberFormat from 'react-number-format';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
@@ -10,6 +8,7 @@ import { listUl as listIcon } from 'react-icons-kit/fa/listUl';
 import { th as cardsIcon } from 'react-icons-kit/fa/th';
 import BootstrapTable from 'react-bootstrap-table-next';
 
+import MomentCard from './MomentCard';
 import { useWindowSize } from '../utils/useWindowSize';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -99,7 +98,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 	const username = usernameRaw.toLowerCase();
 	const [favoritedUsers = []] = useLocalStorage('favoritedUsers');
 	const { isMobile } = useWindowSize();
-	const [tableView, setTableView] = useState(true);
+	const [tableView, setTableView] = useState(false);
 
 	const favorited = favoritedUsers.includes(username);
 
@@ -178,15 +177,6 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					>
 						<span className="toggleViewIcons">
 							<Icon
-								icon={listIcon}
-								style={{
-									borderBottom: tableView
-										? '2px solid #666'
-										: 'none',
-								}}
-								onClick={() => setTableView(true)}
-							/>
-							<Icon
 								icon={cardsIcon}
 								style={{
 									borderBottom: !tableView
@@ -194,6 +184,15 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 										: 'none',
 								}}
 								onClick={() => setTableView(false)}
+							/>
+							<Icon
+								icon={listIcon}
+								style={{
+									borderBottom: tableView
+										? '2px solid #666'
+										: 'none',
+								}}
+								onClick={() => setTableView(true)}
 							/>
 						</span>
 					</div>
@@ -207,105 +206,9 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					}}
 				>
 					{!tableView &&
-						data.usersMoments.map(
-							({
-								playerName,
-								playCategory,
-								description,
-								momentUrl,
-								marketplaceUrl,
-								priceRange,
-								serialNumber,
-								circulationCount,
-							}) => (
-								<Card
-									key={momentUrl}
-									style={{
-										maxWidth: '300px',
-										margin: '5px',
-										flexBasis: '100%',
-									}}
-								>
-									<Card.Body>
-										<Card.Title>{playerName}</Card.Title>
-										<Card.Subtitle className="mb-2 text-muted">
-											{playCategory}
-											<OverlayTrigger
-												overlay={
-													<Tooltip>{description}</Tooltip>
-												}
-											>
-												<Icon
-													icon={infoCircle}
-													style={{
-														paddingLeft: '5px',
-														color: '#969696',
-														cursor: 'pointer',
-													}}
-												/>
-											</OverlayTrigger>
-										</Card.Subtitle>
-										<div
-											style={{
-												display: 'flex',
-												flexDirection: 'column',
-											}}
-										>
-											<Card.Text className="noMargin">
-												min ask:{' '}
-												<b>
-													<NumberFormat
-														value={priceRange.minAsk}
-														displayType={'text'}
-														thousandSeparator={true}
-														prefix={'$'}
-													/>
-												</b>{' '}
-												-{' '}
-												<span class="break">
-													max ask:{' '}
-													<b>
-														<NumberFormat
-															value={priceRange.maxAsk}
-															displayType={'text'}
-															thousandSeparator={true}
-															prefix={'$'}
-														/>
-													</b>
-												</span>
-											</Card.Text>
-											<Card.Text className="noWrap noMargin">
-												<NumberFormat
-													value={serialNumber}
-													displayType={'text'}
-													thousandSeparator={true}
-												/>
-												{' of '}
-												<NumberFormat
-													value={circulationCount}
-													displayType={'text'}
-													thousandSeparator={true}
-												/>
-											</Card.Text>
-											<Card.Link
-												href={momentUrl}
-												target="_blank"
-												className="noWrap noMargin"
-											>
-												moment page
-											</Card.Link>
-											<Card.Link
-												href={marketplaceUrl}
-												target="_blank"
-												className="noWrap noMargin"
-											>
-												marketplace page
-											</Card.Link>
-										</div>
-									</Card.Body>
-								</Card>
-							)
-						)}
+						data.usersMoments.map((moment) => (
+							<MomentCard key={moment.momentUrl} moment={moment} />
+						))}
 					{tableView && (
 						<BootstrapTable
 							keyField="momentUrl"
