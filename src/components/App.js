@@ -8,10 +8,8 @@ import Search from './Search';
 
 const Layout = ({ children }) => (
 	<>
-		<Navbar bg="dark">
-			<Navbar.Brand href="/" style={{ color: '#fff' }}>
-				NBA Topshot Portfolio
-			</Navbar.Brand>
+		<Navbar>
+			<Navbar.Brand href="/">NBA Topshot Portfolio</Navbar.Brand>
 		</Navbar>
 		<div
 			style={{

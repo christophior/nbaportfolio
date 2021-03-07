@@ -2,97 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from 'react-icons-kit';
 import { star as starIcon } from 'react-icons-kit/fa/star';
 import NumberFormat from 'react-number-format';
+import { Helmet } from 'react-helmet';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import { listUl as listIcon } from 'react-icons-kit/fa/listUl';
 import { th as cardsIcon } from 'react-icons-kit/fa/th';
-import BootstrapTable from 'react-bootstrap-table-next';
 
-import MomentCard from './MomentCard';
+import MomentCards from './MomentCards';
+import MomentsTable from './MomentsTable';
 import { useWindowSize } from '../utils/useWindowSize';
-
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-
-const columns = [
-	{
-		dataField: 'playerName',
-		text: 'player',
-		sort: true,
-	},
-	{
-		dataField: 'playCategory',
-		text: 'play',
-		sort: true,
-	},
-	{
-		dataField: 'serialNumber',
-		text: 'serial #',
-		sort: true,
-		formatter: (cell, row) => {
-			return (
-				<>
-					<NumberFormat
-						value={cell}
-						displayType={'text'}
-						thousandSeparator={true}
-					/>
-					{' of '}
-					<NumberFormat
-						value={row.circulationCount}
-						displayType={'text'}
-						thousandSeparator={true}
-					/>
-				</>
-			);
-		},
-	},
-	{
-		dataField: 'momentUrl',
-		text: 'urls',
-		formatter: (cell, row) => {
-			return (
-				<div style={{ display: 'flex', flexDirection: 'column' }}>
-					<a href={cell} style={{ padding: '.25rem' }} target="_blank">
-						moment
-					</a>
-					<a
-						href={row.marketplaceUrl}
-						style={{ padding: '.25rem' }}
-						target="_blank"
-					>
-						marketplace
-					</a>
-				</div>
-			);
-		},
-	},
-	{
-		dataField: 'priceRange.minAsk',
-		text: 'min asking',
-		sort: true,
-		formatter: (cell) => (
-			<NumberFormat
-				value={cell}
-				displayType={'text'}
-				thousandSeparator={true}
-				prefix={'$'}
-			/>
-		),
-	},
-	{
-		dataField: 'priceRange.maxAsk',
-		text: 'max asking',
-		sort: true,
-		formatter: (cell) => (
-			<NumberFormat
-				value={cell}
-				displayType={'text'}
-				thousandSeparator={true}
-				prefix={'$'}
-			/>
-		),
-	},
-];
 
 const Portfolio = ({ username: usernameRaw = '', data }) => {
 	const username = usernameRaw.toLowerCase();
@@ -114,6 +32,9 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 
 	return (
 		<div>
+			<Helmet>
+				<title>{username} - NBA Topshot Portfolio</title>
+			</Helmet>
 			<div
 				style={{
 					display: 'flex',
@@ -140,6 +61,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					<Icon
 						icon={starIcon}
 						style={favorited ? { color: '#e0db16' } : {}}
+						className="starIcon"
 						size={24}
 					/>
 				</span>
@@ -166,7 +88,9 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 			</div>
 
 			<div style={{ padding: '1.5rem 0' }}>
-				<h2 style={{ margin: '0' }}>{username}'s moments</h2>
+				<h2 style={{ margin: '0', padding: '1rem 0' }}>
+					{username}'s moments
+				</h2>
 				{!isMobile && (
 					<div
 						style={{
@@ -178,18 +102,20 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 						<span className="toggleViewIcons">
 							<Icon
 								icon={cardsIcon}
+								className="selectViewIcon"
 								style={{
 									borderBottom: !tableView
-										? '2px solid #666'
+										? '2px solid #b1b1b1'
 										: 'none',
 								}}
 								onClick={() => setTableView(false)}
 							/>
 							<Icon
 								icon={listIcon}
+								className="selectViewIcon"
 								style={{
 									borderBottom: tableView
-										? '2px solid #666'
+										? '2px solid #b1b1b1'
 										: 'none',
 								}}
 								onClick={() => setTableView(true)}
@@ -197,26 +123,8 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 						</span>
 					</div>
 				)}
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						flexWrap: 'wrap',
-						justifyContent: 'center',
-					}}
-				>
-					{!tableView &&
-						data.usersMoments.map((moment) => (
-							<MomentCard key={moment.momentUrl} moment={moment} />
-						))}
-					{tableView && (
-						<BootstrapTable
-							keyField="momentUrl"
-							data={data.usersMoments}
-							columns={columns}
-						/>
-					)}
-				</div>
+				{!tableView && <MomentCards moments={data.usersMoments} />}
+				{tableView && <MomentsTable moments={data.usersMoments} />}
 			</div>
 		</div>
 	);

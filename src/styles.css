@@ -1,12 +1,55 @@
 @import url(https://cdn.rawgit.com/mfd/f3d96ec7f0e8f034cc22ea73b3797b59/raw/856f1dbb8d807aabceb80b6d4f94b464df461b3e/gotham.css);
 
+/* light mode */
+/* :root {
+	--bg-color: #ffffff;
+	--nav-color: #0d0d0f;
+	--text-color: #212126;
+	--hr-color: #212126;
+	--nav-text-color: #fff;
+} */
+
+/* dark mode */
+:root {
+	--bg-color: #212126;
+	--nav-color: #0d0d0f;
+	--text-color: #ffffff;
+	--hr-color: #adadad;
+	--nav-text-color: #ffffff;
+	--hover-fav-color: #5252528c;
+	--star-color: #666;
+}
+
+html,
 body {
 	font-family: GothamPro;
+	height: 100%;
+}
+
+html,
+body,
+#root {
+	background: var(--bg-color);
+}
+
+.navbar {
+	background: var(--nav-color);
+}
+
+.navbar-brand {
+	color: var(--nav-text-color) !important;
 }
 
 p {
 	font-weight: 300;
 	margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	color: var(--text-color);
 }
 
 h1,
@@ -18,6 +61,11 @@ a {
 	margin: 0;
 }
 
+th,
+td {
+	color: var(--text-color);
+}
+
 th {
 	vertical-align: middle !important;
 	white-space: nowrap;
@@ -27,12 +75,24 @@ td {
 	vertical-align: middle !important;
 }
 
+hr {
+	border-top: 1px solid var(--hr-color);
+}
+
+.selectViewIcon {
+	color: var(--text-color);
+}
+
 .noWrap {
 	white-space: nowrap;
 }
 
 .noMargin {
 	margin: 0 !important;
+}
+
+.starIcon {
+	color: var(--star-color);
 }
 
 .toggleViewIcons i {
@@ -47,9 +107,9 @@ td {
 }
 
 .savedUserLink:hover {
-	background: #adadad;
+	background: var(--hover-fav-color);
 	text-decoration: none;
-	color: #ffffff;
+	color: var(--text-color);
 }
 
 .card-body {

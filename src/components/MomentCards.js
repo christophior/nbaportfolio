@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Card, OverlayTrigger, Tooltip, Form } from 'react-bootstrap';
 import { Icon } from 'react-icons-kit';
 import { infoCircle } from 'react-icons-kit/fa/infoCircle';
 import NumberFormat from 'react-number-format';
@@ -13,6 +13,20 @@ const Img = (props) => {
 	) : (
 		<img {...props} styles={style} onError={() => setHide(true)} />
 	);
+};
+
+const sortOptions = {
+	'min asking price (descending)': (a, b) =>
+		b.priceRange.minAsk - a.priceRange.minAsk,
+	'min asking price (ascending)': (a, b) =>
+		a.priceRange.minAsk - b.priceRange.minAsk,
+
+	'max asking price (descending)': (a, b) =>
+		b.priceRange.maxAsk - a.priceRange.maxAsk,
+	'max asking price (ascending)': (a, b) =>
+		a.priceRange.maxAsk - b.priceRange.maxAsk,
+	'serial number (ascending)': (a, b) => a.serialNumber - b.serialNumber,
+	'serial number (descending)': (a, b) => b.serialNumber - a.serialNumber,
 };
 
 const MomentCard = ({ moment }) => {
@@ -127,4 +141,50 @@ const MomentCard = ({ moment }) => {
 	);
 };
 
-export default MomentCard;
+const MomentCards = ({ moments }) => {
+	const [selectedSort, setSelectedSort] = useState(Object.keys(sortOptions)[0]);
+	const sortedMoments = [...moments].sort(sortOptions[selectedSort]);
+	console.log(sortedMoments);
+	return (
+		<div>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					marginTop: '-1rem',
+				}}
+			>
+				<Form style={{ width: '300px' }}>
+					<Form.Group controlId="sortBySelector">
+						<Form.Label style={{ color: '#ffffff' }}>sort by</Form.Label>
+						<Form.Control
+							as="select"
+							size="sm"
+							custom
+							onChange={(e) => setSelectedSort(e.target.value)}
+						>
+							{Object.keys(sortOptions).map((o) => (
+								<option key={o}>{o}</option>
+							))}
+						</Form.Control>
+					</Form.Group>
+				</Form>
+			</div>
+
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					flexWrap: 'wrap',
+					justifyContent: 'center',
+				}}
+			>
+				{sortedMoments.map((moment) => (
+					<MomentCard key={moment.momentUrl} moment={moment} />
+				))}
+			</div>
+		</div>
+	);
+};
+
+export default MomentCards;
