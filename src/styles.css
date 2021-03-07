@@ -1,3 +1,9 @@
+@import url(https://cdn.rawgit.com/mfd/f3d96ec7f0e8f034cc22ea73b3797b59/raw/856f1dbb8d807aabceb80b6d4f94b464df461b3e/gotham.css);
+
+body {
+	font-family: GothamPro;
+}
+
 p {
 	font-weight: 300;
 	margin: 0;
@@ -9,6 +15,16 @@ h3,
 h4,
 a {
 	font-weight: 300;
+	margin: 0;
+}
+
+th {
+	vertical-align: middle !important;
+	white-space: nowrap;
+}
+
+td {
+	vertical-align: middle !important;
 }
 
 .noWrap {
@@ -34,4 +50,42 @@ a {
 	background: #adadad;
 	text-decoration: none;
 	color: #ffffff;
+}
+
+.card-body {
+	padding: 1rem !important;
+}
+
+.break:before {
+	content: '\A';
+	white-space: pre;
+}
+
+.caret {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-top: 4px dashed;
+	border-top: 4px solid \9;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+}
+
+.dropup,
+.dropdown {
+	position: relative;
+}
+
+.dropup .caret,
+.navbar-fixed-bottom .dropdown .caret {
+	border-top: 0;
+	border-bottom: 4px dashed;
+	border-bottom: 4px solid \9;
+	content: '';
+}
+
+.order {
+	display: none;
 }

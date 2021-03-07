@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Icon } from 'react-icons-kit';
 import { star as starIcon } from 'react-icons-kit/fa/star';
+import { infoCircle } from 'react-icons-kit/fa/infoCircle';
 import NumberFormat from 'react-number-format';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
@@ -21,15 +22,14 @@ const columns = [
 	},
 	{
 		dataField: 'playCategory',
-		text: 'play type',
+		text: 'play',
 		sort: true,
 	},
 	{
 		dataField: 'serialNumber',
-		text: 'serial number',
+		text: 'serial #',
 		sort: true,
 		formatter: (cell, row) => {
-			console.log(cell, row);
 			return (
 				<>
 					<NumberFormat
@@ -49,23 +49,21 @@ const columns = [
 	},
 	{
 		dataField: 'momentUrl',
-		text: 'moment url',
-		formatter: (cell) => {
+		text: 'urls',
+		formatter: (cell, row) => {
 			return (
-				<a href={cell} target="_blank">
-					visit moment
-				</a>
-			);
-		},
-	},
-	{
-		dataField: 'marketplaceUrl',
-		text: 'marketplace url',
-		formatter: (cell) => {
-			return (
-				<a href={cell} target="_blank">
-					visit marketplace
-				</a>
+				<div style={{ display: 'flex', flexDirection: 'column' }}>
+					<a href={cell} style={{ padding: '.25rem' }} target="_blank">
+						moment
+					</a>
+					<a
+						href={row.marketplaceUrl}
+						style={{ padding: '.25rem' }}
+						target="_blank"
+					>
+						marketplace
+					</a>
+				</div>
 			);
 		},
 	},
@@ -101,7 +99,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 	const username = usernameRaw.toLowerCase();
 	const [favoritedUsers = []] = useLocalStorage('favoritedUsers');
 	const { isMobile } = useWindowSize();
-	const [tableView, setTableView] = useState(false);
+	const [tableView, setTableView] = useState(true);
 
 	const favorited = favoritedUsers.includes(username);
 
@@ -115,8 +113,6 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 		return <h1>{`${username} not found`} </h1>;
 	}
 
-	console.log(data.usersMoments);
-
 	return (
 		<div>
 			<div
@@ -124,6 +120,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',
+					marginBottom: '1rem',
 				}}
 			>
 				<h1>{username}</h1>
@@ -144,6 +141,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					<Icon
 						icon={starIcon}
 						style={favorited ? { color: '#e0db16' } : {}}
+						size={24}
 					/>
 				</span>
 			</div>
@@ -168,8 +166,8 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 				</p>
 			</div>
 
-			<div style={{ padding: '1rem' }}>
-				<h2>{username}'s moments</h2>
+			<div style={{ padding: '1.5rem 0' }}>
+				<h2 style={{ margin: '0' }}>{username}'s moments</h2>
 				{!isMobile && (
 					<div
 						style={{
@@ -180,15 +178,6 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					>
 						<span className="toggleViewIcons">
 							<Icon
-								icon={cardsIcon}
-								style={{
-									borderBottom: !tableView
-										? '2px solid #666'
-										: 'none',
-								}}
-								onClick={() => setTableView(false)}
-							/>
-							<Icon
 								icon={listIcon}
 								style={{
 									borderBottom: tableView
@@ -196,6 +185,15 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 										: 'none',
 								}}
 								onClick={() => setTableView(true)}
+							/>
+							<Icon
+								icon={cardsIcon}
+								style={{
+									borderBottom: !tableView
+										? '2px solid #666'
+										: 'none',
+								}}
+								onClick={() => setTableView(false)}
 							/>
 						</span>
 					</div>
@@ -223,7 +221,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 								<Card
 									key={momentUrl}
 									style={{
-										width: '18rem',
+										maxWidth: '300px',
 										margin: '5px',
 										flexBasis: '100%',
 									}}
@@ -232,6 +230,20 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 										<Card.Title>{playerName}</Card.Title>
 										<Card.Subtitle className="mb-2 text-muted">
 											{playCategory}
+											<OverlayTrigger
+												overlay={
+													<Tooltip>{description}</Tooltip>
+												}
+											>
+												<Icon
+													icon={infoCircle}
+													style={{
+														paddingLeft: '5px',
+														color: '#969696',
+														cursor: 'pointer',
+													}}
+												/>
+											</OverlayTrigger>
 										</Card.Subtitle>
 										<div
 											style={{
@@ -239,7 +251,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 												flexDirection: 'column',
 											}}
 										>
-											<Card.Text className="noWrap noMargin">
+											<Card.Text className="noMargin">
 												min ask:{' '}
 												<b>
 													<NumberFormat
@@ -249,15 +261,18 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 														prefix={'$'}
 													/>
 												</b>{' '}
-												- max ask:{' '}
-												<b>
-													<NumberFormat
-														value={priceRange.maxAsk}
-														displayType={'text'}
-														thousandSeparator={true}
-														prefix={'$'}
-													/>
-												</b>
+												-{' '}
+												<span class="break">
+													max ask:{' '}
+													<b>
+														<NumberFormat
+															value={priceRange.maxAsk}
+															displayType={'text'}
+															thousandSeparator={true}
+															prefix={'$'}
+														/>
+													</b>
+												</span>
 											</Card.Text>
 											<Card.Text className="noWrap noMargin">
 												<NumberFormat
