@@ -20,7 +20,7 @@ const Layout = ({ children }) => (
 				margin: 'auto',
 				padding: '2rem',
 				textAlign: 'center',
-				maxWidth: '750px',
+				maxWidth: '1000px',
 			}}
 		>
 			{children}

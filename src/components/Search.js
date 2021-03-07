@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useLocalStorage } from '@rehooks/local-storage';
 
 const Search = () => {
 	const [username, setUsername] = useState('');
+	const [favoritedUsers = []] = useLocalStorage('favoritedUsers');
 
 	return (
 		<>
@@ -36,6 +38,34 @@ const Search = () => {
 					Search
 				</Button>
 			</Form>
+
+			{favoritedUsers.length > 0 && (
+				<>
+					<div style={{ padding: '1rem 0' }}>
+						<hr />
+					</div>
+
+					<h2 style={{ padding: '1rem 0', fontSize: '28px' }}>
+						favorited users
+					</h2>
+
+					<div
+						style={{
+							display: 'flex',
+							maxWidth: '400px',
+							justifyContent: 'center',
+							margin: 'auto',
+							flexWrap: 'wrap',
+						}}
+					>
+						{favoritedUsers.map((u) => (
+							<a className="savedUserLink" href={`/?username=${u}`}>
+								{u}
+							</a>
+						))}
+					</div>
+				</>
+			)}
 		</>
 	);
 };

@@ -5,7 +5,9 @@ p {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+a {
 	font-weight: 300;
 }
 
@@ -15,4 +17,21 @@ h3 {
 
 .noMargin {
 	margin: 0 !important;
+}
+
+.toggleViewIcons i {
+	padding: 0px 10px;
+	cursor: pointer;
+}
+
+.savedUserLink {
+	padding: 2px 18px;
+	margin: 0.5rem;
+	border-radius: 10px;
+}
+
+.savedUserLink:hover {
+	background: #adadad;
+	text-decoration: none;
+	color: #ffffff;
 }
