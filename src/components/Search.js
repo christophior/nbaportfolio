@@ -1,47 +1,16 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
 
+import SearchInput from './SearchInput';
+
 const Search = () => {
-	const [username, setUsername] = useState('');
 	const [favoritedUsers = []] = useLocalStorage('favoritedUsers');
 
 	return (
 		<>
 			<h2 style={{ padding: '1rem 0' }}>search for an NBA TopShot user</h2>
 
-			<Form>
-				<Form.Group>
-					<Form.Control
-						type="text"
-						placeholder="username"
-						value={username}
-						style={{
-							maxWidth: '400px',
-							margin: 'auto',
-						}}
-						onChange={(e) => {
-							setUsername(e.target.value);
-						}}
-						onKeyPress={(e) => {
-							if (e.key === 'Enter') {
-								e.preventDefault();
-								window.location = `/?username=${username}`;
-								return;
-							}
-						}}
-					/>
-				</Form.Group>
-
-				<Button
-					variant="primary"
-					onClick={() => {
-						window.location = `/?username=${username}`;
-					}}
-				>
-					Search
-				</Button>
-			</Form>
+			<SearchInput />
 
 			{favoritedUsers.length > 0 && (
 				<>

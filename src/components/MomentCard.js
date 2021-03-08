@@ -134,7 +134,9 @@ const MomentCard = ({ moment }) => {
 					>
 						moment page
 					</Card.Link>
-					{marketplaceUrl ? (
+					{priceRange.minAsk === 0 && priceRange.maxAsk === 0 ? (
+						<br />
+					) : (
 						<Card.Link
 							href={marketplaceUrl}
 							target="_blank"
@@ -142,8 +144,6 @@ const MomentCard = ({ moment }) => {
 						>
 							marketplace page
 						</Card.Link>
-					) : (
-						<br />
 					)}
 				</div>
 			</Card.Body>

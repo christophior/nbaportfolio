@@ -3,8 +3,10 @@ import { Navbar, Spinner } from 'react-bootstrap';
 import qs from 'query-string';
 import axios from 'axios';
 
+import { useWindowSize } from '../utils/useWindowSize';
 import Portfolio from './Portfolio';
 import Search from './Search';
+import SearchInput from './SearchInput';
 
 const donationLink = 'https://www.buymeacoff.ee/christophior';
 console.log(`buy me a coffee at ${donationLink}`);
@@ -12,10 +14,13 @@ console.log(`buy me a coffee at ${donationLink}`);
 const graphqlEndpoint =
 	'https://ceznzhg1t7.execute-api.us-east-1.amazonaws.com/dev/portfolio/';
 
-const Layout = ({ children }) => (
+const Layout = ({ children, showSearch = false }) => (
 	<>
-		<Navbar>
-			<Navbar.Brand href="/">NBA Topshot Portfolio</Navbar.Brand>
+		<Navbar className="justify-content-between" style={{ padding: '.5rem 0' }}>
+			<Navbar.Brand href="/" style={{ paddingLeft: '1rem' }}>
+				NBA Topshot Portfolio
+			</Navbar.Brand>
+			{showSearch && <SearchInput style={{ paddingRight: '1rem' }} />}
 		</Navbar>
 		<div
 			style={{
@@ -36,6 +41,7 @@ const App = () => {
 	const { username } = qs.parse(window.location.search);
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const { isMobile } = useWindowSize();
 
 	useEffect(() => {
 		if (username) {
@@ -77,7 +83,7 @@ const App = () => {
 	}
 
 	return (
-		<Layout>
+		<Layout showSearch={!isMobile}>
 			<Portfolio data={data} username={username} />
 		</Layout>
 	);
