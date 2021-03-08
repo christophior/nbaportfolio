@@ -17,7 +17,8 @@
 		"no-console": "warn",
 		"no-eval": "error",
 		"import/first": "error",
-		"react/prop-types": "off"
+		"react/prop-types": "off",
+		"react/display-name": "off"
 	},
 	"settings": {
 		"react": {

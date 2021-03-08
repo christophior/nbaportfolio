@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import NumberFormat from 'react-number-format';
+import { Number } from './Number';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
@@ -22,16 +22,11 @@ const columns = [
 		formatter: (cell, row) => {
 			return (
 				<>
-					<NumberFormat
-						value={cell}
-						displayType={'text'}
-						thousandSeparator={true}
-					/>
+					<Number value={cell} />
 					{' of '}
-					<NumberFormat
+					<Number
 						value={row.circulationCount}
-						displayType={'text'}
-						thousandSeparator={true}
+						suffix={row.flowRetired ? '' : '+'}
 					/>
 				</>
 			);
@@ -43,16 +38,24 @@ const columns = [
 		formatter: (cell, row) => {
 			return (
 				<div style={{ display: 'flex', flexDirection: 'column' }}>
-					<a href={cell} style={{ padding: '.25rem' }} target="_blank">
-						moment
-					</a>
 					<a
-						href={row.marketplaceUrl}
+						href={cell}
 						style={{ padding: '.25rem' }}
 						target="_blank"
+						rel="noreferrer"
 					>
-						marketplace
+						moment
 					</a>
+					{row.marketplaceUrl && (
+						<a
+							href={row.marketplaceUrl}
+							style={{ padding: '.25rem' }}
+							target="_blank"
+							rel="noreferrer"
+						>
+							marketplace
+						</a>
+					)}
 				</div>
 			);
 		},
@@ -61,27 +64,13 @@ const columns = [
 		dataField: 'priceRange.minAsk',
 		text: 'min asking',
 		sort: true,
-		formatter: (cell) => (
-			<NumberFormat
-				value={cell}
-				displayType={'text'}
-				thousandSeparator={true}
-				prefix={'$'}
-			/>
-		),
+		formatter: (cell) => <Number value={cell} prefix={'$'} />,
 	},
 	{
 		dataField: 'priceRange.maxAsk',
 		text: 'max asking',
 		sort: true,
-		formatter: (cell) => (
-			<NumberFormat
-				value={cell}
-				displayType={'text'}
-				thousandSeparator={true}
-				prefix={'$'}
-			/>
-		),
+		formatter: (cell) => <Number value={cell} prefix={'$'} />,
 	},
 ];
 
@@ -95,7 +84,17 @@ const MomentsTable = ({ moments }) => {
 				justifyContent: 'center',
 			}}
 		>
-			<BootstrapTable keyField="momentUrl" data={moments} columns={columns} />
+			<BootstrapTable
+				keyField="momentUrl"
+				data={moments}
+				columns={columns}
+				defaultSorted={[
+					{
+						dataField: 'priceRange.minAsk',
+						order: 'desc',
+					},
+				]}
+			/>
 		</div>
 	);
 };

@@ -16,6 +16,10 @@ const Search = () => {
 						type="text"
 						placeholder="username"
 						value={username}
+						style={{
+							maxWidth: '400px',
+							margin: 'auto',
+						}}
 						onChange={(e) => {
 							setUsername(e.target.value);
 						}}
@@ -59,7 +63,11 @@ const Search = () => {
 						}}
 					>
 						{favoritedUsers.map((u) => (
-							<a className="savedUserLink" href={`/?username=${u}`}>
+							<a
+								key={u}
+								className="savedUserLink"
+								href={`/?username=${u}`}
+							>
 								{u}
 							</a>
 						))}

@@ -4,6 +4,7 @@ import { star as starIcon } from 'react-icons-kit/fa/star';
 import NumberFormat from 'react-number-format';
 import { Helmet } from 'react-helmet';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
+import get from 'lodash.get';
 
 import { listUl as listIcon } from 'react-icons-kit/fa/listUl';
 import { th as cardsIcon } from 'react-icons-kit/fa/th';
@@ -88,9 +89,6 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 			</div>
 
 			<div style={{ padding: '1.5rem 0' }}>
-				<h2 style={{ margin: '0', padding: '1rem 0' }}>
-					{username}'s moments
-				</h2>
 				{!isMobile && (
 					<div
 						style={{
@@ -123,8 +121,12 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 						</span>
 					</div>
 				)}
-				{!tableView && <MomentCards moments={data.usersMoments} />}
-				{tableView && <MomentsTable moments={data.usersMoments} />}
+				{!tableView && (
+					<MomentCards moments={get(data, 'usersMoments', [])} />
+				)}
+				{tableView && (
+					<MomentsTable moments={get(data, 'usersMoments', [])} />
+				)}
 			</div>
 		</div>
 	);
