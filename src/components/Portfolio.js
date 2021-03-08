@@ -35,7 +35,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 	return (
 		<div>
 			<Helmet>
-				<title>{username} - NBA Topshot Portfolio</title>
+				<title>@{username}&apos;s portfolio</title>
 			</Helmet>
 			<div
 				style={{

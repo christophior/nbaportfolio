@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"author": "Chris Villarreal",
 	"scripts": {
-		"start": "webpack serve",
+		"start": "webpack serve --mode development",
 		"build": "rm -rf ./dist/ && webpack",
 		"postbuild": "cp -R static/ dist/",
 		"lint": "eslint .",
