@@ -10,8 +10,8 @@ import SearchInput from './SearchInput';
 
 const donationLink = 'https://www.buymeacoff.ee/christophior';
 console.log(`buy me a coffee at ${donationLink}`);
-// const graphqlEndpoint = 'http://localhost:3000/dev/portfolio/';
-const graphqlEndpoint =
+// const endpoint = 'http://localhost:3000/dev/portfolio/';
+const endpoint =
 	'https://ceznzhg1t7.execute-api.us-east-1.amazonaws.com/dev/portfolio/';
 
 const Layout = ({ children, showSearch = false }) => (
@@ -47,9 +47,7 @@ const App = () => {
 		if (username) {
 			setLoading(true);
 			(async () => {
-				const { data: userdata } = await axios.get(
-					`${graphqlEndpoint}${username}`
-				);
+				const { data: userdata } = await axios.get(`${endpoint}${username}`);
 				setData(userdata);
 				setLoading(false);
 			})();

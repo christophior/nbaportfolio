@@ -9,11 +9,23 @@ const columns = [
 		dataField: 'playerName',
 		text: 'player',
 		sort: true,
-	},
-	{
-		dataField: 'playCategory',
-		text: 'play',
-		sort: true,
+		formatter: (playerName, { playCategory }) => {
+			return (
+				<div
+					style={{
+						display: 'inline-block',
+						width: '100%',
+						textAlign: 'left',
+						paddingLeft: '1rem',
+					}}
+				>
+					<p>{playerName}</p>
+					<p style={{ fontSize: '14px' }} className="text-muted">
+						{playCategory}
+					</p>
+				</div>
+			);
+		},
 	},
 	{
 		dataField: 'serialNumber',
