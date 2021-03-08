@@ -20,6 +20,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 	const [tableView, setTableView] = useState(false);
 
 	const favorited = favoritedUsers.includes(username);
+	// const flowProfile = `https://flowscan.org/account/0x${data.flowAddress}`;
 
 	useEffect(() => {
 		if (isMobile) {
@@ -44,7 +45,14 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					marginBottom: '1rem',
 				}}
 			>
-				<h1>{username}</h1>
+				<h1
+					className="profileUsername"
+					onClick={() => {
+						window.open(`https://www.nbatopshot.com/user/@${username}`);
+					}}
+				>
+					{username}
+				</h1>
 				<span
 					style={{ paddingLeft: '.5rem', cursor: 'pointer' }}
 					onClick={() => {
