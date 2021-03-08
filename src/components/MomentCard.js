@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Icon } from 'react-icons-kit';
 import { infoCircle } from 'react-icons-kit/fa/infoCircle';
+import HoverVideoPlayer from 'react-hover-video-player';
 // import get from 'lodash.get';
 
 import { Number } from './Number';
 
-const Img = (props) => {
+export const Img = (props) => {
 	const [hide, setHide] = useState(false);
 
 	return hide ? (
@@ -41,6 +42,7 @@ const MomentCard = ({ moment }) => {
 		serialNumber = '',
 		circulationCount = 0,
 		image,
+		video,
 		flowRetired = false,
 	} = moment;
 
@@ -75,7 +77,30 @@ const MomentCard = ({ moment }) => {
 						)}
 					</Card.Subtitle>
 				</div>
-				<Img src={image} />
+				{/* <Img src={image} /> */}
+				<div style={{ display: 'flex' }}>
+					<HoverVideoPlayer
+						videoSrc={video}
+						style={{ borderRadius: '5px', marginBottom: '.5rem' }}
+						pausedOverlay={
+							<div
+								style={{
+									width: '100%',
+									padding: '1rem',
+									overflow: 'hidden',
+								}}
+							>
+								<img
+									src={image}
+									style={{
+										width: '100%',
+										transform: 'scale(1.4)',
+									}}
+								/>
+							</div>
+						}
+					/>
+				</div>
 				<div
 					style={{
 						display: 'flex',

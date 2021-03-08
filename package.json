@@ -12,7 +12,8 @@
 		"lint:fix": "eslint --fix .",
 		"format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d dist"
+		"deploy": "gh-pages -d dist",
+		"ngrok": "ngrok http 4000 -host-header=\"localhost:4000\""
 	},
 	"husky": {
 		"hooks": {
@@ -42,9 +43,11 @@
 		"react-bootstrap-table-next": "^4.0.3",
 		"react-dom": "^17.0.1",
 		"react-helmet": "^6.1.0",
+		"react-hover-video-player": "^7.1.0",
 		"react-icons-kit": "^1.3.1",
 		"react-number-format": "^4.4.4",
-		"style-loader": "^2.0.0"
+		"style-loader": "^2.0.0",
+		"video-react": "^0.14.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

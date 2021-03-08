@@ -109,6 +109,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 							<Icon
 								icon={cardsIcon}
 								className="selectViewIcon"
+								size={20}
 								style={{
 									borderBottom: !tableView
 										? '2px solid #b1b1b1'
@@ -118,6 +119,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 							/>
 							<Icon
 								icon={listIcon}
+								size={20}
 								className="selectViewIcon"
 								style={{
 									borderBottom: tableView

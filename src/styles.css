@@ -20,6 +20,10 @@
 	--star-color: #666;
 }
 
+a:hover {
+	text-decoration: none;
+}
+
 html,
 body {
 	font-family: GothamPro;
@@ -157,6 +161,8 @@ hr {
 	cursor: pointer;
 }
 
+th.sortable:hover,
+.selectViewIcon:hover,
 .starIcon:hover,
 .profileUsername:hover {
 	opacity: 0.7;

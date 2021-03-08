@@ -6,6 +6,12 @@ import axios from 'axios';
 import Portfolio from './Portfolio';
 import Search from './Search';
 
+const donationLink = 'https://www.buymeacoff.ee/christophior';
+console.log(`buy me a coffee at ${donationLink}`);
+// const graphqlEndpoint = 'http://localhost:3000/dev/portfolio/';
+const graphqlEndpoint =
+	'https://ceznzhg1t7.execute-api.us-east-1.amazonaws.com/dev/portfolio/';
+
 const Layout = ({ children }) => (
 	<>
 		<Navbar>
@@ -36,7 +42,7 @@ const App = () => {
 			setLoading(true);
 			(async () => {
 				const { data: userdata } = await axios.get(
-					`https://ceznzhg1t7.execute-api.us-east-1.amazonaws.com/dev/portfolio/${username}`
+					`${graphqlEndpoint}${username}`
 				);
 				setData(userdata);
 				setLoading(false);
