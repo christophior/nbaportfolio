@@ -79,10 +79,10 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 			<div
 				style={{
 					// textAlign: 'left',
-					background: '#1a8a1a',
+					background: 'rgb(10 111 10)',
 					display: 'inline-block',
 					padding: '.5rem 2.5rem',
-					borderRadius: '5px',
+					borderRadius: '12px',
 				}}
 			>
 				<p style={{ color: 'white' }}>estimate portfolio value</p>

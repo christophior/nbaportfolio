@@ -27,7 +27,7 @@ const Search = () => {
 							display: 'flex',
 							maxWidth: '400px',
 							justifyContent: 'center',
-							margin: 'auto',
+							margin: '0 auto',
 							flexWrap: 'wrap',
 						}}
 					>

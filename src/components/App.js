@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Spinner } from 'react-bootstrap';
 import qs from 'query-string';
 import axios from 'axios';
+import { Icon } from 'react-icons-kit';
+import { twitter } from 'react-icons-kit/fa/twitter';
 
 import { useWindowSize } from '../utils/useWindowSize';
 import Portfolio from './Portfolio';
@@ -22,17 +24,18 @@ const Layout = ({ children, showSearch = false }) => (
 			</Navbar.Brand>
 			{showSearch && <SearchInput style={{ paddingRight: '1rem' }} />}
 		</Navbar>
-		<div
-			style={{
-				display: 'flex',
-				flexDirection: 'column',
-				margin: 'auto',
-				padding: '2rem',
-				textAlign: 'center',
-				maxWidth: '1000px',
-			}}
-		>
-			{children}
+		<div className="main">{children}</div>
+		<div className="footer">
+			<div className="footer-left">
+				<a href={donationLink} target="_blank">
+					buy me a coffee
+				</a>
+			</div>
+			<div className="footer-right">
+				<a href="https://twitter.com/christophior" target="_blank">
+					<Icon icon={twitter} />
+				</a>
+			</div>
 		</div>
 	</>
 );

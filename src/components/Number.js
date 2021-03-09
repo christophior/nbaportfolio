@@ -3,7 +3,7 @@ import NumberFormat from 'react-number-format';
 
 export const Number = ({ value, prefix = '', suffix = '' }) => {
 	return value === 0 ? (
-		<p>N/A</p>
+		'N/A'
 	) : (
 		<NumberFormat
 			value={value}

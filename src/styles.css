@@ -7,17 +7,33 @@
 	--text-color: #212126;
 	--hr-color: #212126;
 	--nav-text-color: #fff;
+	--hover-fav-color: #5252528c;
+	--star-color: #666;
 } */
 
 /* dark mode */
 :root {
-	--bg-color: #212126;
-	--nav-color: #0d0d0f;
+	/* --bg-color: #212126;
+	--nav-color: #0d0d0f; */
+	--bg-color: #0d0d0f;
+	--nav-color: #212126;
 	--text-color: #ffffff;
 	--hr-color: #adadad;
 	--nav-text-color: #ffffff;
 	--hover-fav-color: #5252528c;
 	--star-color: #666;
+}
+
+.card {
+	background: var(--nav-color);
+}
+
+.card-body {
+	color: var(--text-color);
+}
+
+.text-muted {
+	color: #909090 !important;
 }
 
 a:hover {
@@ -34,6 +50,57 @@ html,
 body,
 #root {
 	background: var(--bg-color);
+	height: 100%;
+	margin: 0;
+}
+
+.main {
+	min-height: calc(100vh - 116px);
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	padding: 2rem;
+	text-align: center;
+	max-width: 1000px;
+}
+
+@media only screen and (max-width: 600px) {
+	.main {
+		min-height: calc(100vh - 148px);
+	}
+}
+
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	max-width: 1000px;
+	margin: auto;
+	padding-bottom: 1.5rem;
+}
+
+.footer-left {
+	padding-left: 1.5rem;
+}
+
+.footer-right {
+	padding-right: 1.5rem;
+}
+
+.footer-left a,
+.footer-right a {
+	font-size: 14px;
+	color: #565656;
+	font-weight: 100;
+}
+
+.footer-left a:hover,
+.footer-right a:hover {
+	color: #948787;
 }
 
 .navbar {
@@ -61,7 +128,7 @@ h2,
 h3,
 h4,
 a {
-	font-weight: 300;
+	font-weight: 200;
 	margin: 0;
 }
 
