@@ -20,8 +20,9 @@
 	--text-color: #ffffff;
 	--hr-color: #adadad;
 	--nav-text-color: #ffffff;
-	--hover-fav-color: #5252528c;
+	--hover-fav-color: #212121;
 	--star-color: #666;
+	--favorited-text-color: #967719;
 }
 
 .card {
@@ -91,15 +92,16 @@ body,
 	padding-right: 1.5rem;
 }
 
-.footer-left a,
-.footer-right a {
+.footer-left span,
+.footer-right span {
 	font-size: 14px;
 	color: #565656;
 	font-weight: 100;
+	cursor: pointer;
 }
 
-.footer-left a:hover,
-.footer-right a:hover {
+.footer-left span:hover,
+.footer-right span:hover {
 	color: #948787;
 }
 
@@ -176,12 +178,15 @@ hr {
 	padding: 2px 18px;
 	margin: 0.5rem;
 	border-radius: 10px;
+	cursor: pointer;
+	color: var(--favorited-text-color);
+	font-weight: 100;
 }
 
 .savedUserLink:hover {
 	background: var(--hover-fav-color);
 	text-decoration: none;
-	color: var(--text-color);
+	/* color: var(--text-color); */
 }
 
 .card-body {

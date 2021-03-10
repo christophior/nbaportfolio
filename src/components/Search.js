@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocalStorage } from '@rehooks/local-storage';
+import ReactGA from 'react-ga';
 
 import SearchInput from './SearchInput';
 
@@ -32,13 +33,20 @@ const Search = () => {
 						}}
 					>
 						{favoritedUsers.map((u) => (
-							<a
+							<span
 								key={u}
 								className="savedUserLink"
-								href={`/?username=${u}`}
+								onClick={() => {
+									ReactGA.event({
+										category: 'interaction',
+										action: 'visit favorited user',
+										value: u,
+									});
+									window.location = `/?username=${u}`;
+								}}
 							>
 								{u}
-							</a>
+							</span>
 						))}
 					</div>
 				</>

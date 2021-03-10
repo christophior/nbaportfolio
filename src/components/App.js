@@ -4,6 +4,7 @@ import qs from 'query-string';
 import axios from 'axios';
 import { Icon } from 'react-icons-kit';
 import { twitter } from 'react-icons-kit/fa/twitter';
+import ReactGA from 'react-ga';
 
 import { useWindowSize } from '../utils/useWindowSize';
 import Portfolio from './Portfolio';
@@ -22,19 +23,38 @@ const Layout = ({ children, showSearch = false }) => (
 			<Navbar.Brand href="/" style={{ paddingLeft: '1rem' }}>
 				NBA Topshot Portfolio
 			</Navbar.Brand>
-			{showSearch && <SearchInput style={{ paddingRight: '1rem' }} />}
+			{showSearch && (
+				<SearchInput style={{ paddingRight: '1rem' }} context="nav" />
+			)}
 		</Navbar>
 		<div className="main">{children}</div>
 		<div className="footer">
 			<div className="footer-left">
-				<a href={donationLink} target="_blank">
+				<span
+					onClick={() => {
+						ReactGA.event({
+							category: 'promotion',
+							action: 'donation link',
+						});
+
+						window.open(donationLink);
+					}}
+				>
 					buy me a coffee
-				</a>
+				</span>
 			</div>
 			<div className="footer-right">
-				<a href="https://twitter.com/christophior" target="_blank">
+				<span
+					onClick={() => {
+						ReactGA.event({
+							category: 'promotion',
+							action: 'twitter',
+						});
+						window.open('https://twitter.com/christophior');
+					}}
+				>
 					<Icon icon={twitter} />
-				</a>
+				</span>
 			</div>
 		</div>
 	</>

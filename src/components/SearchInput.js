@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import ReactGA from 'react-ga';
 
 const SearchInput = ({ style = {} }) => {
 	const [username, setUsername] = useState('');
+
+	const trackSearch = (username, context) => {
+		ReactGA.event({
+			category: 'interaction',
+			action: context === 'nav' ? 'nav search' : 'search',
+			value: username,
+		});
+	};
 
 	return (
 		<Form style={style}>
@@ -25,6 +34,7 @@ const SearchInput = ({ style = {} }) => {
 						if (e.key === 'Enter') {
 							e.preventDefault();
 							if (username) {
+								trackSearch(username);
 								window.location = `/?username=${username}`;
 								return;
 							}
@@ -39,6 +49,7 @@ const SearchInput = ({ style = {} }) => {
 						borderBottomLeftRadius: '0',
 					}}
 					onClick={() => {
+						trackSearch(username);
 						window.location = `/?username=${username}`;
 					}}
 				>

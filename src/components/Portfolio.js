@@ -5,6 +5,7 @@ import NumberFormat from 'react-number-format';
 import { Helmet } from 'react-helmet';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import get from 'lodash.get';
+import ReactGA from 'react-ga';
 
 import { listUl as listIcon } from 'react-icons-kit/fa/listUl';
 import { th as cardsIcon } from 'react-icons-kit/fa/th';
@@ -29,6 +30,12 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 	}, [isMobile]);
 
 	if (!data || data.error) {
+		ReactGA.event({
+			category: 'error',
+			action: 'username not found',
+			value: username,
+		});
+
 		return <h1>{`${username} not found`} </h1>;
 	}
 
@@ -48,6 +55,11 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 				<h1
 					className="profileUsername"
 					onClick={() => {
+						ReactGA.event({
+							category: 'interaction',
+							action: 'open topshot profile',
+							value: username,
+						});
 						window.open(`https://www.nbatopshot.com/user/@${username}`);
 					}}
 				>
@@ -57,11 +69,23 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					style={{ paddingLeft: '.5rem', cursor: 'pointer' }}
 					onClick={() => {
 						if (favorited) {
+							ReactGA.event({
+								category: 'interaction',
+								action: 'favorited user',
+								value: username,
+							});
+
 							const updatedFavs = favoritedUsers.filter(
 								(u) => u !== username
 							);
 							writeStorage('favoritedUsers', updatedFavs);
 						} else {
+							ReactGA.event({
+								category: 'interaction',
+								action: 'unfavorited user',
+								value: username,
+							});
+
 							const updatedFavs = [username, ...favoritedUsers];
 							writeStorage('favoritedUsers', updatedFavs);
 						}
@@ -114,7 +138,14 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 									? '2px solid #b1b1b1'
 									: 'none',
 							}}
-							onClick={() => setTableView(false)}
+							onClick={() => {
+								ReactGA.event({
+									category: 'interaction',
+									action: 'toggle card view',
+									value: username,
+								});
+								setTableView(false);
+							}}
 						/>
 						<Icon
 							icon={listIcon}
@@ -125,7 +156,14 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 									? '2px solid #b1b1b1'
 									: 'none',
 							}}
-							onClick={() => setTableView(true)}
+							onClick={() => {
+								ReactGA.event({
+									category: 'interaction',
+									action: 'toggle table view',
+									value: username,
+								});
+								setTableView(true);
+							}}
 						/>
 					</span>
 				</div>
