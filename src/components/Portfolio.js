@@ -97,40 +97,38 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 			</div>
 
 			<div style={{ padding: '1.5rem 0' }}>
-				{!isMobile && (
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'flex-end',
-							paddingBottom: '1rem',
-						}}
-					>
-						<span className="toggleViewIcons">
-							<Icon
-								icon={cardsIcon}
-								className="selectViewIcon"
-								size={20}
-								style={{
-									borderBottom: !tableView
-										? '2px solid #b1b1b1'
-										: 'none',
-								}}
-								onClick={() => setTableView(false)}
-							/>
-							<Icon
-								icon={listIcon}
-								size={20}
-								className="selectViewIcon"
-								style={{
-									borderBottom: tableView
-										? '2px solid #b1b1b1'
-										: 'none',
-								}}
-								onClick={() => setTableView(true)}
-							/>
-						</span>
-					</div>
-				)}
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+						paddingBottom: '1rem',
+					}}
+				>
+					<span className="toggleViewIcons">
+						<Icon
+							icon={cardsIcon}
+							className="selectViewIcon"
+							size={20}
+							style={{
+								borderBottom: !tableView
+									? '2px solid #b1b1b1'
+									: 'none',
+							}}
+							onClick={() => setTableView(false)}
+						/>
+						<Icon
+							icon={listIcon}
+							size={20}
+							className="selectViewIcon"
+							style={{
+								borderBottom: tableView
+									? '2px solid #b1b1b1'
+									: 'none',
+							}}
+							onClick={() => setTableView(true)}
+						/>
+					</span>
+				</div>
 				{!tableView && (
 					<MomentCards moments={get(data, 'usersMoments', [])} />
 				)}

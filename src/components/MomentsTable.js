@@ -3,6 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import { Number } from './Number';
 
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import { useWindowSize } from '../utils/useWindowSize';
 
 const columns = [
 	{
@@ -71,6 +72,7 @@ const columns = [
 				</div>
 			);
 		},
+		hideMobile: true,
 	},
 	{
 		dataField: 'priceRange.minAsk',
@@ -83,10 +85,12 @@ const columns = [
 		text: 'max asking',
 		sort: true,
 		formatter: (cell) => <Number value={cell} prefix={'$'} />,
+		hideMobile: true,
 	},
 ];
 
 const MomentsTable = ({ moments }) => {
+	const { isMobile } = useWindowSize();
 	return (
 		<div
 			style={{
@@ -99,7 +103,7 @@ const MomentsTable = ({ moments }) => {
 			<BootstrapTable
 				keyField="momentUrl"
 				data={moments}
-				columns={columns}
+				columns={isMobile ? columns.filter((c) => !c.hideMobile) : columns}
 				defaultSorted={[
 					{
 						dataField: 'priceRange.minAsk',
