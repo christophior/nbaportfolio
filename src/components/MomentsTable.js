@@ -75,18 +75,25 @@ const columns = [
 		hideMobile: true,
 	},
 	{
-		dataField: 'priceRange.minAsk',
-		text: 'min asking',
-		sort: true,
-		formatter: (cell) => <Number value={cell} prefix={'$'} />,
-	},
-	{
-		dataField: 'priceRange.maxAsk',
-		text: 'max asking',
+		dataField: 'estimatedValue',
+		text: 'comparable asks',
 		sort: true,
 		formatter: (cell) => <Number value={cell} prefix={'$'} />,
 		hideMobile: true,
 	},
+	{
+		dataField: 'priceRange.minAsk',
+		text: 'min ask',
+		sort: true,
+		formatter: (cell) => <Number value={cell} prefix={'$'} />,
+	},
+	// {
+	// 	dataField: 'priceRange.maxAsk',
+	// 	text: 'max ask',
+	// 	sort: true,
+	// 	formatter: (cell) => <Number value={cell} prefix={'$'} />,
+	// 	hideMobile: true,
+	// },
 ];
 
 const MomentsTable = ({ moments }) => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from 'react-icons-kit';
 import { star as starIcon } from 'react-icons-kit/fa/star';
-import NumberFormat from 'react-number-format';
 import { Helmet } from 'react-helmet';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import get from 'lodash.get';
@@ -13,6 +12,7 @@ import { th as cardsIcon } from 'react-icons-kit/fa/th';
 import MomentCards from './MomentCards';
 import MomentsTable from './MomentsTable';
 import { useWindowSize } from '../utils/useWindowSize';
+import { Number } from './Number';
 
 const Portfolio = ({ username: usernameRaw = '', data }) => {
 	const username = usernameRaw.toLowerCase();
@@ -106,18 +106,46 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					background: 'rgb(10 111 10)',
 					display: 'inline-block',
 					padding: '.5rem 2.5rem',
-					borderRadius: '12px',
+					borderRadius: '6px',
 				}}
 			>
-				<p style={{ color: 'white' }}>estimate portfolio value</p>
-				<p style={{ color: 'white', fontSize: '2rem' }}>
-					<NumberFormat
-						value={data.portfolio.minValue}
-						displayType={'text'}
-						thousandSeparator={true}
-						prefix={'$'}
-					/>
-				</p>
+				<div
+					style={{
+						display: 'inline-block',
+						borderRight: isMobile ? 'none' : '1px solid #fff',
+						borderBottom: isMobile ? '1px solid #fff' : 'none',
+						paddingRight: isMobile ? '0' : '1rem',
+					}}
+				>
+					<p style={{ color: 'white' }}>minimum portfolio value</p>
+					<p style={{ color: 'white', fontSize: '2rem' }}>
+						<Number
+							value={data.portfolio.minValue}
+							displayType={'text'}
+							thousandSeparator={true}
+							prefix={'$'}
+						/>
+					</p>
+				</div>
+				<div
+					style={{
+						display: 'inline-block',
+						paddingLeft: isMobile ? '0' : '1rem',
+						paddingTop: isMobile ? '.5rem' : '0',
+					}}
+				>
+					<p style={{ color: 'white' }}>
+						comparable portfolio value<b>*</b>
+					</p>
+					<p style={{ color: 'white', fontSize: '2rem' }}>
+						<Number
+							value={data.portfolio.estimatedValue}
+							displayType={'text'}
+							thousandSeparator={true}
+							prefix={'$'}
+						/>
+					</p>
+				</div>
 			</div>
 
 			<div style={{ padding: '1.5rem 0' }}>
@@ -173,6 +201,11 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 				{tableView && (
 					<MomentsTable moments={get(data, 'usersMoments', [])} />
 				)}
+				<p style={{ padding: '1rem 0', color: '#666' }}>
+					* comparable values are calculated by getting the average of the
+					asking prices of the 10 closest serial numbers (minus the highest
+					ask)
+				</p>
 			</div>
 		</div>
 	);

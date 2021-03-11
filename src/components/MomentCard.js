@@ -35,7 +35,9 @@ const MomentCard = ({ moment }) => {
 	const {
 		playerName = '',
 		playCategory = '',
+		setName = '',
 		description = '',
+		estimatedValue = 0,
 		momentUrl = '',
 		marketplaceUrl = '',
 		priceRange = '',
@@ -58,6 +60,9 @@ const MomentCard = ({ moment }) => {
 			<Card.Body>
 				<div>
 					<Card.Title>{playerName}</Card.Title>
+					<Card.Subtitle className="mb-2 text-muted">
+						{setName}
+					</Card.Subtitle>
 					<Card.Subtitle className="mb-2 text-muted">
 						{playCategory}
 						{description && (
@@ -113,14 +118,22 @@ const MomentCard = ({ moment }) => {
 							<Number value={priceRange.minAsk} prefix={'$'} />
 						</b>
 					</Card.Text>
-					<Card.Text className="noMargin">
+					{/* <Card.Text className="noMargin">
 						max ask:{' '}
 						<b>
 							<Number value={priceRange.maxAsk} prefix={'$'} />
 						</b>
+					</Card.Text> */}
+					<Card.Text className="noMargin">
+						comparable asks<b>*</b>:{' '}
+						<b>
+							<Number value={estimatedValue} prefix={'$'} />
+						</b>
 					</Card.Text>
 					<Card.Text className="noWrap noMargin">
-						<Number value={serialNumber} />
+						<b>
+							<Number value={serialNumber} />
+						</b>
 						{' of '}
 						<Number
 							value={circulationCount}
