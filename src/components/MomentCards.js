@@ -3,15 +3,14 @@ import { Form } from 'react-bootstrap';
 import MomentCard from './MomentCard';
 
 const sortOptions = {
-	'min asking price (descending)': (a, b) =>
+	'min ask price (descending)': (a, b) =>
 		b.priceRange.minAsk - a.priceRange.minAsk,
-	'min asking price (ascending)': (a, b) =>
-		a.priceRange.minAsk - b.priceRange.minAsk,
+	'min ask price (ascending)': (a, b) => a.priceRange.minAsk - b.priceRange.minAsk,
 
-	'max asking price (descending)': (a, b) =>
-		b.priceRange.maxAsk - a.priceRange.maxAsk,
-	'max asking price (ascending)': (a, b) =>
-		a.priceRange.maxAsk - b.priceRange.maxAsk,
+	'comparable asks price (descending)': (a, b) =>
+		b.estimatedValue - a.estimatedValue,
+	'comparable asks price (ascending)': (a, b) =>
+		a.estimatedValue - b.estimatedValue,
 	'serial number (ascending)': (a, b) => a.serialNumber - b.serialNumber,
 	'serial number (descending)': (a, b) => b.serialNumber - a.serialNumber,
 };

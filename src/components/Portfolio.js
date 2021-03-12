@@ -3,8 +3,8 @@ import { Icon } from 'react-icons-kit';
 import { star as starIcon } from 'react-icons-kit/fa/star';
 import { Helmet } from 'react-helmet';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
-import get from 'lodash.get';
 import ReactGA from 'react-ga';
+import { Button } from 'react-bootstrap';
 
 import { listUl as listIcon } from 'react-icons-kit/fa/listUl';
 import { th as cardsIcon } from 'react-icons-kit/fa/th';
@@ -14,7 +14,14 @@ import MomentsTable from './MomentsTable';
 import { useWindowSize } from '../utils/useWindowSize';
 import { Number } from './Number';
 
-const Portfolio = ({ username: usernameRaw = '', data }) => {
+const Portfolio = ({
+	username: usernameRaw = '',
+	portfolio,
+	usersMoments = [],
+	error,
+	loadMore,
+	loadingMore,
+}) => {
 	const username = usernameRaw.toLowerCase();
 	const [favoritedUsers = []] = useLocalStorage('favoritedUsers');
 	const { isMobile } = useWindowSize();
@@ -29,7 +36,7 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 		}
 	}, [isMobile]);
 
-	if (!data || data.error) {
+	if (error) {
 		ReactGA.event({
 			category: 'error',
 			action: 'username not found',
@@ -117,10 +124,10 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 						paddingRight: isMobile ? '0' : '1rem',
 					}}
 				>
-					<p style={{ color: 'white' }}>minimum portfolio value</p>
+					<p style={{ color: 'white' }}>minimum value</p>
 					<p style={{ color: 'white', fontSize: '2rem' }}>
 						<Number
-							value={data.portfolio.minValue}
+							value={portfolio.minValue}
 							displayType={'text'}
 							thousandSeparator={true}
 							prefix={'$'}
@@ -135,11 +142,11 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 					}}
 				>
 					<p style={{ color: 'white' }}>
-						comparable portfolio value<b>*</b>
+						comparable value<b>*</b>
 					</p>
 					<p style={{ color: 'white', fontSize: '2rem' }}>
 						<Number
-							value={data.portfolio.estimatedValue}
+							value={portfolio.estimatedValue}
 							displayType={'text'}
 							thousandSeparator={true}
 							prefix={'$'}
@@ -195,12 +202,22 @@ const Portfolio = ({ username: usernameRaw = '', data }) => {
 						/>
 					</span>
 				</div>
-				{!tableView && (
-					<MomentCards moments={get(data, 'usersMoments', [])} />
+				{!tableView && <MomentCards moments={usersMoments} />}
+				{tableView && <MomentsTable moments={usersMoments} />}
+
+				{loadMore && (
+					<Button
+						variant="outline-success"
+						disabled={loadingMore}
+						style={{
+							margin: '1rem',
+						}}
+						onClick={loadMore}
+					>
+						load more
+					</Button>
 				)}
-				{tableView && (
-					<MomentsTable moments={get(data, 'usersMoments', [])} />
-				)}
+
 				<p style={{ padding: '1rem 0', color: '#666' }}>
 					* comparable values are calculated by getting the average of the
 					asking prices of the 10 closest serial numbers (minus the highest
