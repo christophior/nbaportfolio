@@ -8,11 +8,15 @@ import { Button } from 'react-bootstrap';
 
 import { listUl as listIcon } from 'react-icons-kit/fa/listUl';
 import { th as cardsIcon } from 'react-icons-kit/fa/th';
+import { areaChart } from 'react-icons-kit/fa/areaChart';
 
 import MomentCards from './MomentCards';
 import MomentsTable from './MomentsTable';
+import MomentCharts from './MomentCharts';
 import { useWindowSize } from '../utils/useWindowSize';
 import { Number } from './Number';
+
+const WHITELISTED = ['christophior', 'charlie0715'];
 
 const Portfolio = ({
 	username: usernameRaw = '',
@@ -23,9 +27,11 @@ const Portfolio = ({
 	loadingMore,
 }) => {
 	const username = usernameRaw.toLowerCase();
+	const exposeSecretView = WHITELISTED.includes(username);
 	const [favoritedUsers = []] = useLocalStorage('favoritedUsers');
 	const { isMobile } = useWindowSize();
 	const [tableView, setTableView] = useState(false);
+	const [secretView, setSecretView] = useState(false);
 
 	const favorited = favoritedUsers.includes(username);
 	// const flowProfile = `https://flowscan.org/account/0x${data.flowAddress}`;
@@ -169,9 +175,10 @@ const Portfolio = ({
 							className="selectViewIcon"
 							size={20}
 							style={{
-								borderBottom: !tableView
-									? '2px solid #b1b1b1'
-									: 'none',
+								borderBottom:
+									!tableView && !secretView
+										? '2px solid #b1b1b1'
+										: 'none',
 							}}
 							onClick={() => {
 								ReactGA.event({
@@ -180,6 +187,7 @@ const Portfolio = ({
 									value: username,
 								});
 								setTableView(false);
+								setSecretView(false);
 							}}
 						/>
 						<Icon
@@ -187,9 +195,10 @@ const Portfolio = ({
 							size={20}
 							className="selectViewIcon"
 							style={{
-								borderBottom: tableView
-									? '2px solid #b1b1b1'
-									: 'none',
+								borderBottom:
+									tableView && !secretView
+										? '2px solid #b1b1b1'
+										: 'none',
 							}}
 							onClick={() => {
 								ReactGA.event({
@@ -198,12 +207,35 @@ const Portfolio = ({
 									value: username,
 								});
 								setTableView(true);
+								setSecretView(false);
 							}}
 						/>
+						{exposeSecretView && (
+							<Icon
+								icon={areaChart}
+								size={20}
+								className="selectViewIcon"
+								style={{
+									borderBottom: secretView
+										? '2px solid #b1b1b1'
+										: 'none',
+								}}
+								onClick={() => {
+									ReactGA.event({
+										category: 'interaction',
+										action: 'enable secret view',
+										value: username,
+									});
+									setSecretView(true);
+								}}
+							/>
+						)}
 					</span>
 				</div>
-				{!tableView && <MomentCards moments={usersMoments} />}
-				{tableView && <MomentsTable moments={usersMoments} />}
+
+				{!tableView && !secretView && <MomentCards moments={usersMoments} />}
+				{tableView && !secretView && <MomentsTable moments={usersMoments} />}
+				{secretView && <MomentCharts moments={usersMoments} />}
 
 				{loadMore && (
 					<Button
